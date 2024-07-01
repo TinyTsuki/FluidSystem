@@ -1,17 +1,16 @@
 package edivad.fluidsystem.blocks.pipe;
 
 import java.util.List;
-import org.jetbrains.annotations.Nullable;
 import edivad.fluidsystem.api.IFluidSystemConnectableBlock;
 import edivad.fluidsystem.tools.Translations;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -77,8 +76,8 @@ public class PipeControllerBlock extends Block implements IFluidSystemConnectabl
   }
 
   @Override
-  public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
-      TooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, Item.TooltipContext context,
+      List<Component> tooltip, TooltipFlag tooltipFlag) {
     tooltip.add(
         Component.translatable(Translations.PIPE_CONTROLLER).withStyle(ChatFormatting.GRAY));
   }

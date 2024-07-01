@@ -20,7 +20,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 
 public class ScreenModularTank extends AbstractContainerScreen<ContainerTankBlockController> {
 
-  private static final ResourceLocation TEXTURES = new ResourceLocation(FluidSystem.ID,
+  private static final ResourceLocation TEXTURES = ResourceLocation.fromNamespaceAndPath(FluidSystem.ID,
       "textures/gui/controller_tank_block.png");
   private static final MutableComponent TANK_EMPTY =
       Component.translatable(Translations.TANK_EMPTY);
@@ -78,7 +78,7 @@ public class ScreenModularTank extends AbstractContainerScreen<ContainerTankBloc
       var tooltip = new ArrayList<Component>();
       tooltip.add(blockentity.clientFluidStack.isEmpty()
           ? TANK_EMPTY
-          : blockentity.clientFluidStack.getDisplayName());
+          : blockentity.clientFluidStack.getHoverName());
       var amount = FORMAT.format(blockentity.clientFluidStack.getAmount());
       var capacity = FORMAT.format(blockentity.totalCapacity);
       tooltip.add(Component.translatable(Translations.LIQUID_AMOUNT, amount, capacity));

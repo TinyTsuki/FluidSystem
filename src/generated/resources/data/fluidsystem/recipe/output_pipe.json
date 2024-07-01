@@ -6,18 +6,15 @@
       "item": "fluidsystem:structural_tank_block"
     },
     "b": {
-      "item": "minecraft:bucket"
-    },
-    "c": {
-      "item": "minecraft:redstone"
+      "item": "minecraft:water_bucket"
     }
   },
   "pattern": [
-    " b ",
-    "aaa",
-    " c "
+    "a",
+    "b"
   ],
   "result": {
-    "item": "fluidsystem:input_tank_block"
+    "count": 1,
+    "id": "fluidsystem:output_pipe"
   }
 }

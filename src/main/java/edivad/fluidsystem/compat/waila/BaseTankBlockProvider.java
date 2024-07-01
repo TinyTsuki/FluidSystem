@@ -37,6 +37,6 @@ public class BaseTankBlockProvider implements IServerDataProvider<BlockAccessor>
 
   @Override
   public ResourceLocation getUid() {
-    return new ResourceLocation(FluidSystem.ID, "base_tank_block");
+    return FluidSystem.rl("base_tank_block");
   }
 }

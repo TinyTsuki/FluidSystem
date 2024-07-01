@@ -1,6 +1,8 @@
 package edivad.fluidsystem.datagen;
 
+import java.util.concurrent.CompletableFuture;
 import edivad.fluidsystem.setup.Registration;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -10,8 +12,8 @@ import net.minecraft.world.item.Items;
 
 public class Recipes extends RecipeProvider {
 
-  public Recipes(PackOutput packOutput) {
-    super(packOutput);
+  public Recipes(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> registries) {
+    super(packOutput, registries);
   }
 
   @Override

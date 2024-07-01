@@ -1,18 +1,18 @@
 package edivad.fluidsystem.setup;
 
 import edivad.fluidsystem.FluidSystem;
-import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class Config {
 
-  public static void init() {
+  public static void registerConfig(ModContainer container) {
     var SERVER_BUILDER = new ModConfigSpec.Builder();
     SERVER_BUILDER.comment(FluidSystem.NAME + "'s config");
     Tank.registerServerConfig(SERVER_BUILDER);
 
-    ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SERVER_BUILDER.build());
+    container.registerConfig(ModConfig.Type.SERVER, SERVER_BUILDER.build());
   }
 
   public static class Tank {

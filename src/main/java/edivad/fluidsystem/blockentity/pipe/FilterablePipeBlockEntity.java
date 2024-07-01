@@ -1,10 +1,11 @@
 package edivad.fluidsystem.blockentity.pipe;
 
 import edivad.fluidsystem.api.IFluidSystemFilterable;
-import edivad.fluidsystem.network.PacketHandler;
 import edivad.fluidsystem.network.packet.UpdateFilterablePipeBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -13,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class FilterablePipeBlockEntity extends BlockEntity implements IFluidSystemFilterable {
 
@@ -24,43 +26,50 @@ public class FilterablePipeBlockEntity extends BlockEntity implements IFluidSyst
   }
 
   @Override
-  protected void saveAdditional(CompoundTag tag) {
-    super.saveAdditional(tag);
-    fluidFilter.writeToNBT(tag);
+  protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    super.saveAdditional(tag, registries);
+    tag.put("fluid", FluidStack.OPTIONAL_CODEC
+        .encode(this.fluidFilter, NbtOps.INSTANCE, new CompoundTag())
+        .getOrThrow());
   }
 
   @Override
-  public void load(CompoundTag tag) {
-    super.load(tag);
-    fluidFilter = FluidStack.loadFluidStackFromNBT(tag);
+  protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    super.loadAdditional(tag, registries);
+    fluidFilter = FluidStack.OPTIONAL_CODEC.parse(NbtOps.INSTANCE, tag.get("fluid")).getOrThrow();
   }
 
   //Synchronizing on block update
   @Override
   public ClientboundBlockEntityDataPacket getUpdatePacket() {
-    CompoundTag tag = new CompoundTag();
-    fluidFilter.writeToNBT(tag);
+    var tag = new CompoundTag();
+    tag.put("fluid", FluidStack.OPTIONAL_CODEC
+        .encode(this.fluidFilter, NbtOps.INSTANCE, new CompoundTag())
+        .getOrThrow());
     return ClientboundBlockEntityDataPacket.create(this);
   }
 
   @Override
-  public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-    CompoundTag tag = pkt.getTag();
-    fluidFilter = FluidStack.loadFluidStackFromNBT(tag);
+  public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt,
+      HolderLookup.Provider lookupProvider) {
+    var tag = pkt.getTag();
+    fluidFilter = FluidStack.OPTIONAL_CODEC.parse(NbtOps.INSTANCE, tag.get("fluid")).getOrThrow();
   }
 
   //Synchronizing on chunk load
   @Override
-  public CompoundTag getUpdateTag() {
-    CompoundTag tag = super.getUpdateTag();
-    fluidFilter.writeToNBT(tag);
+  public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+    var tag = super.getUpdateTag(registries);
+    tag.put("fluid", FluidStack.OPTIONAL_CODEC
+        .encode(this.fluidFilter, NbtOps.INSTANCE, new CompoundTag())
+        .getOrThrow());
     return tag;
   }
 
   @Override
-  public void handleUpdateTag(CompoundTag tag) {
-    super.handleUpdateTag(tag);
-    fluidFilter = FluidStack.loadFluidStackFromNBT(tag);
+  public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) {
+    super.handleUpdateTag(tag, lookupProvider);
+    fluidFilter = FluidStack.OPTIONAL_CODEC.parse(NbtOps.INSTANCE, tag.get("fluid")).getOrThrow();
   }
 
   @Override
@@ -72,7 +81,7 @@ public class FilterablePipeBlockEntity extends BlockEntity implements IFluidSyst
     }
     setChanged();
     if (!level.isClientSide) {
-      PacketHandler.sendToAll(new UpdateFilterablePipeBlock(getBlockPos(), fluidFilter));
+      PacketDistributor.sendToAllPlayers(new UpdateFilterablePipeBlock(getBlockPos(), fluidFilter));
     }
   }
 

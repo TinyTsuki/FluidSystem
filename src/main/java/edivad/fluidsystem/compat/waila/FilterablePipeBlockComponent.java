@@ -26,6 +26,6 @@ public class FilterablePipeBlockComponent implements IBlockComponentProvider {
 
   @Override
   public ResourceLocation getUid() {
-    return new ResourceLocation(FluidSystem.ID, "filterable_pipe_block");
+    return FluidSystem.rl("filterable_pipe_block");
   }
 }

@@ -2,7 +2,9 @@ package edivad.fluidsystem.datagen;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import edivad.fluidsystem.setup.Registration;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
@@ -13,14 +15,15 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 
 public class LootTables extends BlockLootSubProvider {
 
-  public LootTables() {
-    super(Set.of(), FeatureFlags.REGISTRY.allFlags());
+  public LootTables(HolderLookup.Provider registries) {
+    super(Set.of(), FeatureFlags.REGISTRY.allFlags(), registries);
   }
 
-  public static LootTableProvider create(PackOutput packOutput) {
+  public static LootTableProvider create(PackOutput packOutput,
+      CompletableFuture<HolderLookup.Provider> provider) {
     return new LootTableProvider(packOutput, Set.of(), List.of(
         new LootTableProvider.SubProviderEntry(LootTables::new, LootContextParamSets.BLOCK)
-    ));
+    ), provider);
   }
 
   @Override

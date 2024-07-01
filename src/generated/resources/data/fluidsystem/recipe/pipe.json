@@ -6,19 +6,16 @@
       "item": "minecraft:iron_ingot"
     },
     "b": {
-      "item": "minecraft:green_dye"
-    },
-    "c": {
-      "item": "minecraft:honeycomb"
+      "item": "minecraft:bamboo"
     }
   },
   "pattern": [
-    "aba",
-    "bcb",
-    "aba"
+    "aaa",
+    "bbb",
+    "aaa"
   ],
   "result": {
-    "count": 4,
-    "item": "fluidsystem:structural_tank_block"
+    "count": 8,
+    "id": "fluidsystem:pipe"
   }
 }

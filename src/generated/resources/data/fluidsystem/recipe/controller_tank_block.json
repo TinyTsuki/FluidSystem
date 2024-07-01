@@ -18,6 +18,7 @@
     "a a"
   ],
   "result": {
-    "item": "fluidsystem:controller_tank_block"
+    "count": 1,
+    "id": "fluidsystem:controller_tank_block"
   }
 }

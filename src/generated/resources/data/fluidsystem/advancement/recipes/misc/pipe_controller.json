@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_structural_tank_block": {
+    "has_pipe": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "fluidsystem:structural_tank_block"
-            ]
+            "items": "fluidsystem:pipe"
           }
         ]
       },
@@ -15,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fluidsystem:interface_tank_block"
+        "recipe": "fluidsystem:pipe_controller"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -23,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_structural_tank_block"
+      "has_pipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "fluidsystem:interface_tank_block"
+      "fluidsystem:pipe_controller"
     ]
   }
 }

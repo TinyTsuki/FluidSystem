@@ -1,12 +1,12 @@
 package edivad.fluidsystem.blockentity.tank;
 
 import edivad.fluidsystem.container.ContainerTankBlockController;
-import edivad.fluidsystem.network.PacketHandler;
 import edivad.fluidsystem.network.packet.UpdateControllerTankBlock;
 import edivad.fluidsystem.setup.Registration;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -24,6 +24,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class ControllerTankBlockEntity extends BaseTankBlockEntity implements MenuProvider {
 
@@ -61,7 +62,7 @@ public class ControllerTankBlockEntity extends BaseTankBlockEntity implements Me
   public void onServerTick(Level level, BlockPos pos, BlockState state,
       BaseTankBlockEntity baseTankBlockEntity) {
     super.onServerTick(level, pos, state, baseTankBlockEntity);
-    PacketHandler.sendToAll(
+    PacketDistributor.sendToAllPlayers(
         new UpdateControllerTankBlock(getBlockPos(), tank.getFluid(), getNumberOfTanksBlock(), getTotalCapacity()));
     ItemStack input = itemHandler.getStackInSlot(0);
     ItemStack output = itemHandler.getStackInSlot(1);
@@ -86,7 +87,7 @@ public class ControllerTankBlockEntity extends BaseTankBlockEntity implements Me
           itemHandler.extractItem(0, 1, false);
           itemHandler.insertItem(1, result.getResult(), false);
           setChanged();
-        } else if (checkTypeofLiquid.getAmount() == fluidHandler.getTankCapacity(0) && checkTypeofLiquid.isFluidEqual(tank.getFluid())) {
+        } else if (checkTypeofLiquid.getAmount() == fluidHandler.getTankCapacity(0) && FluidStack.isSameFluidSameComponents(checkTypeofLiquid, tank.getFluid())) {
           if (fluidHandler.getTankCapacity(0) <= tank.getSpace()) {
             var result = FluidUtil.tryEmptyContainerAndStow(input, tank, itemHandler,
                 tank.getSpace(), null, true);
@@ -113,7 +114,7 @@ public class ControllerTankBlockEntity extends BaseTankBlockEntity implements Me
     int oldCapacity = tank.getCapacity();
     tank.setCapacity(newCapacity);
     if (oldCapacity > newCapacity && tank.getFluidAmount() > newCapacity) {
-      tank.drain(new FluidStack(tank.getFluid(), tank.getFluidAmount() - newCapacity),
+      tank.drain(new FluidStack(tank.getFluid().getFluid(), tank.getFluidAmount() - newCapacity),
           IFluidHandler.FluidAction.EXECUTE);
     }
   }
@@ -128,17 +129,17 @@ public class ControllerTankBlockEntity extends BaseTankBlockEntity implements Me
   }
 
   @Override
-  protected void saveAdditional(CompoundTag tag) {
-    super.saveAdditional(tag);
-    tag.put("inventory", itemHandler.serializeNBT());
-    tank.writeToNBT(tag);
+  protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    super.saveAdditional(tag, registries);
+    tag.put("inventory", itemHandler.serializeNBT(registries));
+    tank.writeToNBT(registries, tag);
   }
 
   @Override
-  public void load(CompoundTag tag) {
-    super.load(tag);
-    itemHandler.deserializeNBT(tag.getCompound("inventory"));
-    tank.readFromNBT(tag);
+  protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    super.loadAdditional(tag, registries);
+    itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
+    tank.readFromNBT(registries, tag);
   }
 
   private ItemStackHandler createHandler() {

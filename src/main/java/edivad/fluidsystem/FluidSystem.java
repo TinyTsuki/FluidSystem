@@ -14,17 +14,16 @@ import edivad.fluidsystem.datagen.Lang;
 import edivad.fluidsystem.datagen.LootTables;
 import edivad.fluidsystem.datagen.Recipes;
 import edivad.fluidsystem.datagen.TagsProvider;
-import edivad.fluidsystem.network.PacketHandler;
+import edivad.fluidsystem.network.packet.UpdateControllerTankBlock;
+import edivad.fluidsystem.network.packet.UpdateFilterablePipeBlock;
 import edivad.fluidsystem.setup.ClientSetup;
 import edivad.fluidsystem.setup.Config;
 import edivad.fluidsystem.setup.FluidsystemCreativeModeTabs;
 import edivad.fluidsystem.setup.Registration;
-import net.minecraft.data.DataProvider;
-import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.InterModComms;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -34,6 +33,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 @Mod(FluidSystem.ID)
 public class FluidSystem {
@@ -42,16 +42,17 @@ public class FluidSystem {
   public static final String NAME = "FluidSystem";
   public static final Logger LOGGER = LogUtils.getLogger();
 
-  public FluidSystem(IEventBus modEventBus, Dist dist) {
+  public FluidSystem(ModContainer modContainer, Dist dist) {
+    var modEventBus = modContainer.getEventBus();
     Registration.init(modEventBus);
     modEventBus.addListener(this::handleCommonSetup);
     modEventBus.addListener(this::handleClientSetup);
     modEventBus.addListener(this::handleRegisterMenuScreens);
     modEventBus.addListener(this::handleGatherData);
     modEventBus.addListener(this::handleRegisterCapabilities);
+    modEventBus.addListener(this::registerPayloads);
     FluidsystemCreativeModeTabs.register(modEventBus);
-    var packetHandler = new PacketHandler(modEventBus);
-    Config.init();
+    Config.registerConfig(modContainer);
 
     if (dist.isClient()) {
       ClientSetup.init(modEventBus);
@@ -79,9 +80,8 @@ public class FluidSystem {
     var lookupProvider = event.getLookupProvider();
     var fileHelper = event.getExistingFileHelper();
 
-    generator.addProvider(event.includeServer(), new Recipes(packOutput));
-    generator.addProvider(event.includeServer(),
-        (DataProvider.Factory<LootTableProvider>) LootTables::create);
+    generator.addProvider(event.includeServer(), new Recipes(packOutput, lookupProvider));
+    generator.addProvider(event.includeServer(), LootTables.create(packOutput, lookupProvider));
     generator.addProvider(event.includeServer(),
         new TagsProvider(packOutput, lookupProvider, fileHelper));
     generator.addProvider(event.includeServer(), new Lang(packOutput));
@@ -102,7 +102,13 @@ public class FluidSystem {
         ControllerTankBlockEntity::getItemCap);
   }
 
+  private void registerPayloads(RegisterPayloadHandlersEvent event) {
+    var registrar = event.registrar(ID).versioned("1");
+    registrar.playToClient(UpdateControllerTankBlock.TYPE, UpdateControllerTankBlock.STREAM_CODEC, UpdateControllerTankBlock::handle);
+    registrar.playToClient(UpdateFilterablePipeBlock.TYPE, UpdateFilterablePipeBlock.STREAM_CODEC, UpdateFilterablePipeBlock::handle);
+  }
+
   public static ResourceLocation rl(String path) {
-    return new ResourceLocation(ID, path);
+    return ResourceLocation.fromNamespaceAndPath(ID, path);
   }
 }

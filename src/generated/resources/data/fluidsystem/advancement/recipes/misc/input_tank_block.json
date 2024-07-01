@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_nether_star": {
+    "has_structural_tank_block": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:nether_star"
-            ]
+            "items": "fluidsystem:structural_tank_block"
           }
         ]
       },
@@ -15,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fluidsystem:infinite_water_source"
+        "recipe": "fluidsystem:input_tank_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -23,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_nether_star"
+      "has_structural_tank_block"
     ]
   ],
   "rewards": {
     "recipes": [
-      "fluidsystem:infinite_water_source"
+      "fluidsystem:input_tank_block"
     ]
   }
 }

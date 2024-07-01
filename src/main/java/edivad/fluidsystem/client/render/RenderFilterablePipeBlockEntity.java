@@ -58,86 +58,86 @@ public class RenderFilterablePipeBlockEntity implements
     if (dir.equals(Direction.NORTH) || dir.equals(Direction.SOUTH)) {
       float offsetSide = dir.equals(Direction.NORTH) ? 0 : 0.19f;
       //WEST
-      renderer.vertex(matrix4f, 1.001f, 0.66f, 0.752f - offsetSide).color(r, g, b, a).uv(u1, v1)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 1.001f, 0.34f, 0.752f - offsetSide).color(r, g, b, a).uv(u1, v2)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 1.001f, 0.34f, 0.435f - offsetSide).color(r, g, b, a).uv(u2, v2)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 1.001f, 0.66f, 0.435f - offsetSide).color(r, g, b, a).uv(u2, v1)
-          .uv2(light).endVertex();
+      renderer.addVertex(matrix4f, 1.001f, 0.66f, 0.752f - offsetSide)
+          .setColor(r, g, b, a).setUv(u1, v1).setLight(light);
+      renderer.addVertex(matrix4f, 1.001f, 0.34f, 0.752f - offsetSide)
+          .setColor(r, g, b, a).setUv(u1, v2).setLight(light);
+      renderer.addVertex(matrix4f, 1.001f, 0.34f, 0.435f - offsetSide)
+          .setColor(r, g, b, a).setUv(u2, v2).setLight(light);
+      renderer.addVertex(matrix4f, 1.001f, 0.66f, 0.435f - offsetSide)
+          .setColor(r, g, b, a).setUv(u2, v1).setLight(light);
 
       //EAST
-      renderer.vertex(matrix4f, -0.001f, 0.34f, 0.435f - offsetSide).color(r, g, b, a).uv(u1, v1)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, -0.001f, 0.34f, 0.752f - offsetSide).color(r, g, b, a).uv(u1, v2)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, -0.001f, 0.66f, 0.752f - offsetSide).color(r, g, b, a).uv(u2, v2)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, -0.001f, 0.66f, 0.435f - offsetSide).color(r, g, b, a).uv(u2, v1)
-          .uv2(light).endVertex();
+      renderer.addVertex(matrix4f, -0.001f, 0.34f, 0.435f - offsetSide)
+          .setColor(r, g, b, a).setUv(u1, v1).setLight(light);
+      renderer.addVertex(matrix4f, -0.001f, 0.34f, 0.752f - offsetSide)
+          .setColor(r, g, b, a).setUv(u1, v2).setLight(light);
+      renderer.addVertex(matrix4f, -0.001f, 0.66f, 0.752f - offsetSide)
+          .setColor(r, g, b, a).setUv(u2, v2).setLight(light);
+      renderer.addVertex(matrix4f, -0.001f, 0.66f, 0.435f - offsetSide)
+          .setColor(r, g, b, a).setUv(u2, v1).setLight(light);
 
       //UP
-      renderer.vertex(matrix4f, 0.34f, 1.001f, 0.435f - offsetSide).color(r, g, b, a).uv(u1, v1)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 0.34f, 1.001f, 0.752f - offsetSide).color(r, g, b, a).uv(u1, v2)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 0.66f, 1.001f, 0.752f - offsetSide).color(r, g, b, a).uv(u2, v2)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 0.66f, 1.001f, 0.435f - offsetSide).color(r, g, b, a).uv(u2, v1)
-          .uv2(light).endVertex();
+      renderer.addVertex(matrix4f, 0.34f, 1.001f, 0.435f - offsetSide)
+          .setColor(r, g, b, a).setUv(u1, v1).setLight(light);
+      renderer.addVertex(matrix4f, 0.34f, 1.001f, 0.752f - offsetSide)
+          .setColor(r, g, b, a).setUv(u1, v2).setLight(light);
+      renderer.addVertex(matrix4f, 0.66f, 1.001f, 0.752f - offsetSide)
+          .setColor(r, g, b, a).setUv(u2, v2).setLight(light);
+      renderer.addVertex(matrix4f, 0.66f, 1.001f, 0.435f - offsetSide)
+          .setColor(r, g, b, a).setUv(u2, v1).setLight(light);
 
       //DOWN
-      renderer.vertex(matrix4f, 0.66f, -0.001f, 0.752f - offsetSide).color(r, g, b, a).uv(u1, v1)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 0.34f, -0.001f, 0.752f - offsetSide).color(r, g, b, a).uv(u1, v2)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 0.34f, -0.001f, 0.435f - offsetSide).color(r, g, b, a).uv(u2, v2)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 0.66f, -0.001f, 0.435f - offsetSide).color(r, g, b, a).uv(u2, v1)
-          .uv2(light).endVertex();
+      renderer.addVertex(matrix4f, 0.66f, -0.001f, 0.752f - offsetSide)
+          .setColor(r, g, b, a).setUv(u1, v1).setLight(light);
+      renderer.addVertex(matrix4f, 0.34f, -0.001f, 0.752f - offsetSide)
+          .setColor(r, g, b, a).setUv(u1, v2).setLight(light);
+      renderer.addVertex(matrix4f, 0.34f, -0.001f, 0.435f - offsetSide)
+          .setColor(r, g, b, a).setUv(u2, v2).setLight(light);
+      renderer.addVertex(matrix4f, 0.66f, -0.001f, 0.435f - offsetSide)
+          .setColor(r, g, b, a).setUv(u2, v1).setLight(light);
     } else if (dir.equals(Direction.EAST) || dir.equals(Direction.WEST)) {
       float offsetSide = dir.equals(Direction.EAST) ? 0 : 0.19f;
 
       //NORTH
-      renderer.vertex(matrix4f, 0.245f + offsetSide, 0.657f, 1.001f).color(r, g, b, a).uv(u1, v1)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 0.245f + offsetSide, 0.339f, 1.001f).color(r, g, b, a).uv(u1, v2)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 0.565f + offsetSide, 0.339f, 1.001f).color(r, g, b, a).uv(u2, v2)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 0.565f + offsetSide, 0.657f, 1.001f).color(r, g, b, a).uv(u2, v1)
-          .uv2(light).endVertex();
+      renderer.addVertex(matrix4f, 0.245f + offsetSide, 0.657f, 1.001f)
+          .setColor(r, g, b, a).setUv(u1, v1).setLight(light);
+      renderer.addVertex(matrix4f, 0.245f + offsetSide, 0.339f, 1.001f)
+          .setColor(r, g, b, a).setUv(u1, v2).setLight(light);
+      renderer.addVertex(matrix4f, 0.565f + offsetSide, 0.339f, 1.001f)
+          .setColor(r, g, b, a).setUv(u2, v2).setLight(light);
+      renderer.addVertex(matrix4f, 0.565f + offsetSide, 0.657f, 1.001f)
+          .setColor(r, g, b, a).setUv(u2, v1).setLight(light);
 
       //SOUTH
-      renderer.vertex(matrix4f, 0.245f + offsetSide, 0.339f, -0.001f).color(r, g, b, a).uv(u1, v1)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 0.245f + offsetSide, 0.657f, -0.001f).color(r, g, b, a).uv(u1, v2)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 0.565f + offsetSide, 0.657f, -0.001f).color(r, g, b, a).uv(u2, v2)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 0.565f + offsetSide, 0.339f, -0.001f).color(r, g, b, a).uv(u2, v1)
-          .uv2(light).endVertex();
+      renderer.addVertex(matrix4f, 0.245f + offsetSide, 0.339f, -0.001f)
+          .setColor(r, g, b, a).setUv(u1, v1).setLight(light);
+      renderer.addVertex(matrix4f, 0.245f + offsetSide, 0.657f, -0.001f)
+          .setColor(r, g, b, a).setUv(u1, v2).setLight(light);
+      renderer.addVertex(matrix4f, 0.565f + offsetSide, 0.657f, -0.001f)
+          .setColor(r, g, b, a).setUv(u2, v2).setLight(light);
+      renderer.addVertex(matrix4f, 0.565f + offsetSide, 0.339f, -0.001f)
+          .setColor(r, g, b, a).setUv(u2, v1).setLight(light);
 
       //UP
-      renderer.vertex(matrix4f, 0.245f + offsetSide, 1.001f, 0.339f).color(r, g, b, a).uv(u1, v1)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 0.245f + offsetSide, 1.001f, 0.657f).color(r, g, b, a).uv(u1, v2)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 0.565f + offsetSide, 1.001f, 0.657f).color(r, g, b, a).uv(u2, v2)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 0.565f + offsetSide, 1.001f, 0.339f).color(r, g, b, a).uv(u2, v1)
-          .uv2(light).endVertex();
+      renderer.addVertex(matrix4f, 0.245f + offsetSide, 1.001f, 0.339f)
+          .setColor(r, g, b, a).setUv(u1, v1).setLight(light);
+      renderer.addVertex(matrix4f, 0.245f + offsetSide, 1.001f, 0.657f)
+          .setColor(r, g, b, a).setUv(u1, v2).setLight(light);
+      renderer.addVertex(matrix4f, 0.565f + offsetSide, 1.001f, 0.657f)
+          .setColor(r, g, b, a).setUv(u2, v2).setLight(light);
+      renderer.addVertex(matrix4f, 0.565f + offsetSide, 1.001f, 0.339f)
+          .setColor(r, g, b, a).setUv(u2, v1).setLight(light);
 
       //DOWN
-      renderer.vertex(matrix4f, 0.565f + offsetSide, -0.001f, 0.657f).color(r, g, b, a).uv(u1, v1)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 0.245f + offsetSide, -0.001f, 0.657f).color(r, g, b, a).uv(u1, v2)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 0.245f + offsetSide, -0.001f, 0.339f).color(r, g, b, a).uv(u2, v2)
-          .uv2(light).endVertex();
-      renderer.vertex(matrix4f, 0.565f + offsetSide, -0.001f, 0.339f).color(r, g, b, a).uv(u2, v1)
-          .uv2(light).endVertex();
+      renderer.addVertex(matrix4f, 0.565f + offsetSide, -0.001f, 0.657f)
+          .setColor(r, g, b, a).setUv(u1, v1).setLight(light);
+      renderer.addVertex(matrix4f, 0.245f + offsetSide, -0.001f, 0.657f)
+          .setColor(r, g, b, a).setUv(u1, v2).setLight(light);
+      renderer.addVertex(matrix4f, 0.245f + offsetSide, -0.001f, 0.339f)
+          .setColor(r, g, b, a).setUv(u2, v2).setLight(light);
+      renderer.addVertex(matrix4f, 0.565f + offsetSide, -0.001f, 0.339f)
+          .setColor(r, g, b, a).setUv(u2, v1).setLight(light);
     }
     mStack.popPose();
   }

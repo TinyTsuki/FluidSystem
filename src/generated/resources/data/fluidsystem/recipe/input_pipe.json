@@ -14,6 +14,7 @@
     "b"
   ],
   "result": {
-    "item": "fluidsystem:input_pipe"
+    "count": 1,
+    "id": "fluidsystem:input_pipe"
   }
 }

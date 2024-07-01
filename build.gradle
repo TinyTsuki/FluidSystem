@@ -6,8 +6,8 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'net.neoforged.gradle.userdev' version "$neo_gradle_version"
-    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '2.1.0'
-    id 'me.modmuss50.mod-publish-plugin' version '0.5.0'
+    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '2.1.2'
+    id 'me.modmuss50.mod-publish-plugin' version '0.5.1'
     id 'com.diffplug.spotless' version '6.25.0'
 }
 
@@ -22,7 +22,7 @@ base.archivesName = 'FluidSystem'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
         if (System.getProperty('idea.active')) {
             vendor = JvmVendorSpec.JETBRAINS
         }
@@ -87,20 +87,22 @@ repositories {
     }
 }
 
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+
 dependencies {
     implementation "net.neoforged:neoforge:$neo_version"
 
     //implementation "edivad:EdivadLib-$minecraft_version:2.1.1"
     implementation "curse.maven:edivadlib-638508:$edivadlib_id"
 
-    implementation "mcjty.theoneprobe:theoneprobe:$top_version"
+    implementation "curse.maven:the-one-probe-245211:$top_version"
+    implementation "curse.maven:jade-324717:$jade_id"
+    localRuntime "mezz.jei:jei-$minecraft_version-neoforge:$jei_version"
 
-    compileOnly "curse.maven:jade-api-324717:$jade_id_api"
-    runtimeOnly "curse.maven:jade-324717:${jade_id}"
-    runtimeOnly "mezz.jei:jei-$minecraft_version-neoforge:$jei_version"
-
-    //runtimeOnly "team.chisel.ctm:CTM:1.18.2-${ctm_version}"
-    //runtimeOnly "curse.maven:mekanism-268560:${mekanism_version}"
+    localRuntime "team.chisel.ctm:CTM:1.21-$ctm_version"
+    //localRuntime "curse.maven:mekanism-268560:${mekanism_version}"
 }
 
 spotless {
@@ -116,7 +118,6 @@ spotless {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
     options.compilerArgs.addAll(['-Xmaxerrs', '100000'])
 }
 
@@ -132,7 +133,7 @@ tasks.withType(ProcessResources).configureEach {
     ]
     inputs.properties replaceProperties
 
-    filesMatching(['META-INF/mods.toml']) {
+    filesMatching(['META-INF/neoforge.mods.toml']) {
         expand replaceProperties + [project: project]
     }
 }

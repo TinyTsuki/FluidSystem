@@ -64,7 +64,7 @@ public class InfiniteTank implements IFluidHandler, IFluidTank {
   @NotNull
   @Override
   public FluidStack drain(FluidStack resource, FluidAction action) {
-    if (resource.isEmpty() || !resource.isFluidEqual(resource)) {
+    if (resource.isEmpty() || !fluid.isSame(resource.getFluid())) {
       return FluidStack.EMPTY;
     }
     return drain(resource.getAmount(), action);

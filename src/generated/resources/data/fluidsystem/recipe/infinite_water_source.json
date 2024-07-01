@@ -18,6 +18,7 @@
     "aca"
   ],
   "result": {
-    "item": "fluidsystem:infinite_water_source"
+    "count": 1,
+    "id": "fluidsystem:infinite_water_source"
   }
 }

@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bamboo": {
+    "has_structural_tank_block": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:bamboo"
-            ]
+            "items": "fluidsystem:structural_tank_block"
           }
         ]
       },
@@ -15,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fluidsystem:pipe"
+        "recipe": "fluidsystem:input_pipe"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -23,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_bamboo"
+      "has_structural_tank_block"
     ]
   ],
   "rewards": {
     "recipes": [
-      "fluidsystem:pipe"
+      "fluidsystem:input_pipe"
     ]
   }
 }

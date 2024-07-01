@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_pipe": {
+    "has_nether_star": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "fluidsystem:pipe"
-            ]
+            "items": "minecraft:nether_star"
           }
         ]
       },
@@ -15,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fluidsystem:pipe_controller"
+        "recipe": "fluidsystem:infinite_water_source"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -23,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_pipe"
+      "has_nether_star"
     ]
   ],
   "rewards": {
     "recipes": [
-      "fluidsystem:pipe_controller"
+      "fluidsystem:infinite_water_source"
     ]
   }
 }

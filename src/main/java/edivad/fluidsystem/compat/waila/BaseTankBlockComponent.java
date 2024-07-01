@@ -42,6 +42,6 @@ public class BaseTankBlockComponent implements IBlockComponentProvider {
 
   @Override
   public ResourceLocation getUid() {
-    return new ResourceLocation(FluidSystem.ID, "base_tank_block");
+    return FluidSystem.rl("base_tank_block");
   }
 }

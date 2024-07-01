@@ -1,13 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_structural_tank_block": {
+    "has_iron_ingot": {
       "conditions": {
         "items": [
           {
-            "items": [
-              "fluidsystem:structural_tank_block"
-            ]
+            "items": "minecraft:iron_ingot"
           }
         ]
       },
@@ -15,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fluidsystem:output_pipe"
+        "recipe": "fluidsystem:structural_tank_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -23,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_structural_tank_block"
+      "has_iron_ingot"
     ]
   ],
   "rewards": {
     "recipes": [
-      "fluidsystem:output_pipe"
+      "fluidsystem:structural_tank_block"
     ]
   }
 }

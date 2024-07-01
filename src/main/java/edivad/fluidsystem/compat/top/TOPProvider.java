@@ -14,7 +14,7 @@ import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.IProbeInfoProvider;
 import mcjty.theoneprobe.api.ITheOneProbe;
 import mcjty.theoneprobe.api.ProbeMode;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -30,7 +30,7 @@ public class TOPProvider implements IProbeInfoProvider, Function<ITheOneProbe, V
     probe.registerElementFactory(new IElementFactory() {
 
       @Override
-      public IElement createElement(FriendlyByteBuf friendlyByteBuf) {
+      public IElement createElement(RegistryFriendlyByteBuf friendlyByteBuf) {
         return new MyFluidElement(friendlyByteBuf);
       }
 
@@ -73,6 +73,6 @@ public class TOPProvider implements IProbeInfoProvider, Function<ITheOneProbe, V
 
   @Override
   public ResourceLocation getID() {
-    return new ResourceLocation(FluidSystem.ID, "default");
+    return FluidSystem.rl("default");
   }
 }

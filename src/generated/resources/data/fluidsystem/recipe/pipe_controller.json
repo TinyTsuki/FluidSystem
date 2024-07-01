@@ -15,6 +15,7 @@
     " a "
   ],
   "result": {
-    "item": "fluidsystem:pipe_controller"
+    "count": 1,
+    "id": "fluidsystem:pipe_controller"
   }
 }

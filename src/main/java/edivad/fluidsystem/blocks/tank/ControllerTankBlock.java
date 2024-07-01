@@ -10,12 +10,11 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.EntityBlock;
@@ -44,8 +43,8 @@ public class ControllerTankBlock extends BaseBlock implements EntityBlock {
   }
 
   @Override
-  public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-      InteractionHand handIn, BlockHitResult hit) {
+  protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
+      Player player, BlockHitResult hitResult) {
     if (player instanceof ServerPlayer serverPlayer) {
       level.getBlockEntity(pos, Registration.CONTROLLER_TANK_BLOCK_ENTITY.get())
           .ifPresent(blockEntity -> blockEntity.activate(serverPlayer));
@@ -54,8 +53,8 @@ public class ControllerTankBlock extends BaseBlock implements EntityBlock {
   }
 
   @Override
-  public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip,
-      TooltipFlag flagIn) {
+  public void appendHoverText(ItemStack stack, Item.TooltipContext context,
+      List<Component> tooltip, TooltipFlag tooltipFlag) {
     tooltip.add(Component.translatable(Translations.TANK_BLOCK_CONTROLLER_TOOLTIP)
         .withStyle(ChatFormatting.GRAY));
   }
